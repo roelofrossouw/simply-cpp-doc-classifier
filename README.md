@@ -39,7 +39,7 @@ place: a passport has *Surname* and *REPUBLIC OF SOUTH AFRICA* too, but not *NAT
 | `lines` | straight edges (line segments) paired into four sides at nearly right angles, so a broken outline still counts | reads each for the kinds' words |
 | `text` | its printed labels, read from the whole image: where they are gives where it is (RANSAC, so misreads drop out) | snaps its edges to the nearest outline |
 
-`text` is the one to use: on 132 sample photos and scans it found 57 of 60 ID cards, 42 of 43 passports
+`text` is the one to use: on 132 sample photos and scans it found 57 of 60 ID cards (and 7 more not in the labels: sideways WhatsApp photos), 42 of 43 passports
 and all 6 licences, with no false finds; it also places a document whose edges run off the image. The
 outline methods find fewer (41 to 44 ID cards) and take longer, but show what edges alone can do.
 

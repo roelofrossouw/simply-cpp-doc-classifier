@@ -503,8 +503,10 @@ namespace sc::doc {
                  {
                      at("REPUBLICOFSOUTHAFRICA", 268, 69, card_size, false, 2),
                      at("NATIONALIDENTITYCARD", 271, 104, card_size, false, 3),
-                     // OCR sometimes reads NATIONAL and IDENTITY CARD as two lines
+                     // OCR sometimes reads the title as two lines: NATIONAL | IDENTITY CARD, or
+                     // NATIONAL IDENTITY | CARD (no weight: with CARD it's the whole title again)
                      at("IDENTITYCARD", 538, 104, card_size, false, 2),
+                     at("NATIONALIDENTITY", 271, 104, card_size, false, 0),
                      at("SURNAME", 273, 162, card_size),
                      at("NAMES", 272, 219, card_size),
                      at("SEX", 271, 274, card_size, false, 1, false, 1.0, 0.45),
@@ -515,8 +517,8 @@ namespace sc::doc {
                      at("STATUS", 275, 549, card_size, false, 1, false, 0.08, 0.3),
                      at("SIGNATURE", 795, 510, card_size),
                  },
-                 {"REPUBLICOFSOUTHAFRICA", "NATIONALIDENTITYCARD", "IDENTITYCARD"},
-                 {"NATIONALIDENTITYCARD", "IDENTITYCARD"}},
+                 {"REPUBLICOFSOUTHAFRICA", "NATIONALIDENTITYCARD", "IDENTITYCARD", "NATIONALIDENTITY"},
+                 {"NATIONALIDENTITYCARD", "IDENTITYCARD", "NATIONALIDENTITY"}},
                 // A passport's data page: any country's by its machine readable lines (ICAO 9303
                 // puts them in the same place on every passport; their check digits say it's one),
                 // a South African one's printed labels too
