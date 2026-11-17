@@ -24,11 +24,11 @@
 //
 // A card found by its outline is then read (OCR) to say what it is, and which way up.
 
-#include <opencv.h>
-#include <percent.h>
-#include <point.h>
-#include <polygon.h>
-#include <size.h>
+#include <sc/image/opencv.h>
+#include <sc/core/percent.h>
+#include <sc/core/point.h>
+#include <sc/core/polygon.h>
+#include <sc/core/size.h>
 
 #include <array>
 #include <optional>

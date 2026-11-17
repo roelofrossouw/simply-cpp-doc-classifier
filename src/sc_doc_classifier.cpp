@@ -1,6 +1,6 @@
-#include "sc_doc_classifier.h"
+#include <sc/doc-classifier/sc_doc_classifier.h>
 
-#include <ocr.h>
+#include <sc/ai/ocr.h>
 
 #include <opencv2/core.hpp>
 #include <opencv2/imgcodecs.hpp>

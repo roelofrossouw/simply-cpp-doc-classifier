@@ -13,7 +13,7 @@ them out straight and upright. It knows four kinds:
 **Documentation:** the [simply-cpp wiki](https://github.com/roelofrossouw/simply-cpp/wiki) has the [sc-doc-classifier reference](https://github.com/roelofrossouw/simply-cpp/wiki/Reference-sc-doc-classifier).
 
 ```cpp
-#include <sc_doc_classifier.h>
+#include <sc/doc-classifier/sc_doc_classifier.h>
 
 const sc::image photo{"scan.jpg"};
 for (const auto &found: sc::doc::find_documents(photo, sc::doc::method::text)) {

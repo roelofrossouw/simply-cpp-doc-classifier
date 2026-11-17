@@ -1,7 +1,7 @@
 // Cards drawn on a background, tilted and in perspective, found by their outlines and their straight
 // edges with the corners where they were drawn, and cut out at a card's size. No OCR here: what a card
 // is needs real printing, which the demos show on photographs.
-#include <sc_doc_classifier.h>
+#include <sc/doc-classifier/sc_doc_classifier.h>
 
 #include "sc_test.h"
 

@@ -8,10 +8,10 @@
 #include <string>
 #include <vector>
 
-#include <params.h>
-#include <sc.h>
+#include <sc/core/params.h>
+#include <sc/core/sc.h>
 
-#include <sc_doc_classifier.h>
+#include <sc/doc-classifier/sc_doc_classifier.h>
 
 namespace demo {
     inline std::vector<std::filesystem::path> images_in(const std::vector<std::string> &given) {
