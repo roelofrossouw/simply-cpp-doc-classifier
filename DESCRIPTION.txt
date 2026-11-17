@@ -1,1 +1,1 @@
-Finds documents in photographs and scans, tells what they are, and cuts them out straight: South African driving licences to start with
+Finds documents in photographs and scans, tells what they are, and cuts them out straight (South African driving licences, ID cards, temporary licences, passports); reads South African identity documents for their fields

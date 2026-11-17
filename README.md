@@ -1,7 +1,8 @@
 # simply-cpp-doc-classifier
 
-`sc-doc-classifier` finds identity documents in photographs and scans, tells what they are, and cuts
-them out straight and upright. It knows four kinds:
+`sc-doc-classifier` finds identity documents in photographs and scans, tells what they are, cuts
+them out straight and upright, and reads South African identity documents for their fields
+(`sc::doc::identity`). It knows four kinds:
 
 | `sc::doc::kind` | | Cut out at |
 |---|---|---|
@@ -53,6 +54,24 @@ card, the plastic sleeve it's in, the boxes printed on it) each is tried in turn
 a cut-out, and `find_driving_licences()`, `find_id_cards()`, `find_passports()` and
 `find_temporary_licences()` look for one kind.
 
+## Reading an identity document
+
+`sc::doc::identity` (`<sc/doc-classifier/identity.h>`) reads a South African smart ID card, green ID
+book or passport for its fields: the identity number, names, birth date, sex, nationality, and a
+passport's number and dates. It turns the photo upright, reads it with sc-ai's OCR, and parses the
+lines. Every identity number it reports has passed a Luhn check; `confidence()` says how many
+independent checks agreed (the printed birth date and sex, or a passport's machine readable lines
+and their check digits). Pass `true` as the second argument to also get face embeddings from the
+photo.
+
+```cpp
+const sc::doc::identity document{"id.jpg", true};
+if (document.confidence() >= 90) store(document.to_json());
+```
+
+`identity::valid_id_number()`, `id_date_of_birth()` and `id_sex()` check and decode an identity
+number on its own. Until sc-ai 2.6.0 this was `sc::identity` in sc-ai.
+
 ## The demos
 
 Each shows one method on the images (or folders of images) given, writing each image with what was
@@ -62,6 +81,7 @@ found drawn on it and each document cut out:
 sc-doc-classifier-text photos/ -o /tmp/found
 sc-doc-classifier-lines photos/ --cards           # every card-shaped outline too
 sc-doc-classifier-contours photos/ --find passport
+sc-doc-classifier-identity id.jpg                 # an identity document read for its fields
 ```
 
 ## Building
@@ -72,8 +92,12 @@ cmake --build cmake-build-local
 ctest --test-dir cmake-build-local
 ```
 
-It needs sc-core, sc-image and sc-ai (OCR, with simply-cpp-models), OpenCV (4 or 5) and a C++20
-compiler.
+It needs sc-core, sc-image and sc-ai (OCR, with simply-cpp-models), OpenCV (4 or 5), nlohmann_json
+and a C++20 compiler.
+
+The identity tests read specimen documents with made-up data (`tests/resource/samples`). Real
+identity documents are never committed: the suite's `private/sc-ai/documents` (shared with sc-ai's
+tests) is copied in as `resource/private` when it is there; without it those checks are skipped.
 
 ## License
 

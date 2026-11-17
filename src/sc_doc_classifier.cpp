@@ -1,4 +1,5 @@
 #include <sc/doc-classifier/sc_doc_classifier.h>
+#include "mrz.h"
 
 #include <sc/ai/ocr.h>
 
@@ -608,18 +609,8 @@ namespace sc::doc {
 
         // ICAO 9303's check digit over field (7, 3, 1 weights; letters 10 to 35, < 0); OCR's O read
         // for 0 in a number field forgiven
-        bool check_digit_ok(std::string field, const char digit) {
-            int total = 0;
-            constexpr int weights[] = {7, 3, 1};
-            for (std::size_t i = 0; i < field.size(); ++i) {
-                const char c = field[i];
-                int value = 0;
-                if (c >= '0' && c <= '9') value = c - '0';
-                else if (c >= 'A' && c <= 'Z') value = c - 'A' + 10;
-                total += value * weights[i % 3];
-            }
-            const char d = digit == 'O' ? '0' : digit;
-            return d >= '0' && d <= '9' && total % 10 == d - '0';
+        bool check_digit_ok(const std::string &field, const char digit) {
+            return mrz::check_matches(field, digit == 'O' ? '0' : digit);
         }
 
         // How many of a passport's second machine readable line's check digits are right: the number,
