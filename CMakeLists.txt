@@ -8,10 +8,10 @@ option(SC_DOC_CLASSIFIER_BUILD_TESTS "Build simply-cpp-doc-classifier tests" ${P
 get_sc_version()
 message(STATUS "SimplyCPP ${SC_MODULE} Version: ${SC_VERSION}")
 
-find_or_install_package(sc-core simply-cpp-dev simply-cpp 2.2.0)
-find_or_install_package(sc-image simply-cpp-image-dev simply-cpp-image 5.6.0)
+find_or_install_package(sc-core simply-cpp-dev simply-cpp 3.0.0)
+find_or_install_package(sc-image simply-cpp-image-dev simply-cpp-image 6.0.0)
 # OCR reads the cards' printed words.
-find_or_install_package(sc-ai simply-cpp-ai-dev simply-cpp-ai 2.6.0) # its sc::ocr without the CPU memory arena and with onnx::gpu_memory_limit() (built in)
+find_or_install_package(sc-ai simply-cpp-ai-dev simply-cpp-ai 3.0.0) # its sc::ocr without the CPU memory arena and with onnx::gpu_memory_limit() (built in)
 # Outlines, lines and perspective, on the pixels themselves (sc-image keeps OpenCV out of its header).
 # OpenCV 5 (Homebrew) moved contours, line fitting and transforms into geometry; 4 (Ubuntu) has them
 # in imgproc, and the RANSAC fits in calib3d.
@@ -56,4 +56,4 @@ add_sc_example(sc-doc-classifier-lines)
 add_sc_example(sc-doc-classifier-text)
 add_sc_example(sc-doc-classifier-identity)
 
-package_sc_module(DEV_DEPENDS "simply-cpp-dev (>= 2.0.0~)" "simply-cpp-image-dev (>= 5.6.0~)" "simply-cpp-ai-dev (>= 2.6.0~)" libopencv-dev nlohmann-json3-dev)
+package_sc_module(DEV_DEPENDS "simply-cpp-dev (>= 3.0.0~)" "simply-cpp-image-dev (>= 6.0.0~)" "simply-cpp-ai-dev (>= 3.0.0~)" libopencv-dev nlohmann-json3-dev)
