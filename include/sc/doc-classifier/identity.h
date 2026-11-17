@@ -14,7 +14,7 @@ namespace sc {
     class image;
 }
 
-namespace sc::doc {
+namespace sc::doc_classifier {
     namespace impl {
         class identity_reader;
     }
@@ -31,7 +31,7 @@ namespace sc::doc {
     /// card or book is read from the printed number and corroborated against
     /// the printed birth date and sex.
     ///
-    ///     const sc::doc::identity document{"id.jpg"};
+    ///     const sc::doc_classifier::identity document{"id.jpg"};
     ///     if (document.confidence() >= 90) store(document.to_json());
     ///     else queue_for_review(document);
     ///
@@ -161,4 +161,4 @@ namespace sc::doc {
 
         friend class impl::identity_reader;
     };
-} // namespace sc::doc
+} // namespace sc::doc_classifier

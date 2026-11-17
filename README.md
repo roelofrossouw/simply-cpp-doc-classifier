@@ -2,9 +2,9 @@
 
 `sc-doc-classifier` finds identity documents in photographs and scans, tells what they are, cuts
 them out straight and upright, and reads South African identity documents for their fields
-(`sc::doc::identity`). It knows four kinds:
+(`sc::doc_classifier::identity`). It knows four kinds:
 
-| `sc::doc::kind` | | Cut out at |
+| `sc::doc_classifier::kind` | | Cut out at |
 |---|---|---|
 | `sa_driving_licence` | the South African driving licence card | 1012 × 638 (ID-1 at 300 dpi) |
 | `sa_id_card` | the South African smart ID card | 1012 × 638 |
@@ -17,8 +17,8 @@ them out straight and upright, and reads South African identity documents for th
 #include <sc/doc-classifier/sc_doc_classifier.h>
 
 const sc::image photo{"scan.jpg"};
-for (const auto &found: sc::doc::find_documents(photo, sc::doc::method::text)) {
-    found.picture.save(sc::doc::short_name(found.type) + ".png");   // straight and upright
+for (const auto &found: sc::doc_classifier::find_documents(photo, sc::doc_classifier::method::text)) {
+    found.picture.save(sc::doc_classifier::short_name(found.type) + ".png");   // straight and upright
     found.confidence;      // how sure, from the printed words read in their places
     found.where.corners;   // where it lies in the photo, its top left first
 }
@@ -34,7 +34,7 @@ place: a passport has *Surname* and *REPUBLIC OF SOUTH AFRICA* too, but not *NAT
 
 ## Three ways to find one
 
-| `sc::doc::method` | Finds the document by | Then |
+| `sc::doc_classifier::method` | Finds the document by | Then |
 |---|---|---|
 | `contours` | closed outlines of edges with four corners, in a card's proportions; the sides refitted past the rounded corners | reads each for the kinds' words |
 | `lines` | straight edges (line segments) paired into four sides at nearly right angles, so a broken outline still counts | reads each for the kinds' words |
@@ -56,7 +56,7 @@ a cut-out, and `find_driving_licences()`, `find_id_cards()`, `find_passports()` 
 
 ## Reading an identity document
 
-`sc::doc::identity` (`<sc/doc-classifier/identity.h>`) reads a South African smart ID card, green ID
+`sc::doc_classifier::identity` (`<sc/doc-classifier/identity.h>`) reads a South African smart ID card, green ID
 book or passport for its fields: the identity number, names, birth date, sex, nationality, and a
 passport's number and dates. It turns the photo upright, reads it with sc-ai's OCR, and parses the
 lines. Every identity number it reports has passed a Luhn check; `confidence()` says how many
@@ -65,7 +65,7 @@ and their check digits). Pass `true` as the second argument to also get face emb
 photo.
 
 ```cpp
-const sc::doc::identity document{"id.jpg", true};
+const sc::doc_classifier::identity document{"id.jpg", true};
 if (document.confidence() >= 90) store(document.to_json());
 ```
 

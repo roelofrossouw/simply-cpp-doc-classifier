@@ -23,7 +23,7 @@
 
 using namespace std;
 
-namespace sc::doc {
+namespace sc::doc_classifier {
     namespace impl {
         // A recognised line of text. Words are kept both spaced, for reading
         // labelled fields, and packed, because the identity number on a green
@@ -1201,4 +1201,4 @@ namespace sc::doc {
     std::ostream &operator<<(std::ostream &lhs, const identity &rhs) {
         return lhs << static_cast<string>(rhs);
     }
-} // namespace sc::doc
+} // namespace sc::doc_classifier

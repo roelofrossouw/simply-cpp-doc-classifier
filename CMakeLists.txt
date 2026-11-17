@@ -22,7 +22,7 @@ else ()
     set(SC_DOC_CLASSIFIER_OPENCV_COMPONENTS core imgproc imgcodecs calib3d)
 endif ()
 find_or_install_package(OpenCV libopencv-dev opencv COMPONENTS ${SC_DOC_CLASSIFIER_OPENCV_COMPONENTS})
-# sc::doc::identity's results as JSON (to_json(), from_json()).
+# sc::doc_classifier::identity's results as JSON (to_json(), from_json()).
 find_or_install_package(nlohmann_json nlohmann-json3-dev nlohmann-json)
 
 set(SOURCE_OBJECTS)

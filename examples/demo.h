@@ -1,6 +1,6 @@
 #pragma once
 // What the three demos share: each looks for cards (driving licences, smart ID cards) in the images given, one way
-// (sc::doc::method), and shows what it found, so the ways can be compared on the same images.
+// (sc::doc_classifier::method), and shows what it found, so the ways can be compared on the same images.
 // Writes only to the output folder (default: the temporary directory's sc-doc-classifier).
 
 #include <filesystem>
@@ -34,16 +34,16 @@ namespace demo {
     }
 
     // Licences green, ID cards blue, passports purple, temporary licences orange
-    inline std::string colour_of(const sc::doc::kind what) {
+    inline std::string colour_of(const sc::doc_classifier::kind what) {
         switch (what) {
-            case sc::doc::kind::sa_id_card: return "deepskyblue";
-            case sc::doc::kind::passport: return "magenta";
-            case sc::doc::kind::sa_temporary_driving_licence: return "orange";
+            case sc::doc_classifier::kind::sa_id_card: return "deepskyblue";
+            case sc::doc_classifier::kind::passport: return "magenta";
+            case sc::doc_classifier::kind::sa_temporary_driving_licence: return "orange";
             default: return "lime";
         }
     }
 
-    inline int run(int argc, char **argv, const sc::doc::method how, const std::string &name, const std::string &description) {
+    inline int run(int argc, char **argv, const sc::doc_classifier::method how, const std::string &name, const std::string &description) {
         const sc::params args{argc, argv, {
             {"name", name},
             {"description", description},
@@ -58,7 +58,7 @@ namespace demo {
                 {"images", {{"required", false}, {"help", "photographs or scans, or folders of them"}}}}}}};
 
         try {
-            sc::console::title("simply-cpp doc-classifier: cards found by " + sc::doc::to_string(how));
+            sc::console::title("simply-cpp doc-classifier: cards found by " + sc::doc_classifier::to_string(how));
             const auto images = images_in(args.as<std::vector<std::string> >("images", {}));
             if (images.empty()) {
                 sc::console::note("Pass photographs or scans (or folders of them) to look in: " + name + " <image>...");
@@ -68,10 +68,10 @@ namespace demo {
             std::filesystem::create_directories(out);
             const bool cards = args.as<bool>("cards");
             const std::string find = args.as<std::string>("find");
-            std::vector<sc::doc::kind> kinds;
-            for (const auto what: {sc::doc::kind::sa_driving_licence, sc::doc::kind::sa_id_card, sc::doc::kind::passport,
-                                   sc::doc::kind::sa_temporary_driving_licence})
-                if (find == sc::doc::short_name(what)) kinds = {what};
+            std::vector<sc::doc_classifier::kind> kinds;
+            for (const auto what: {sc::doc_classifier::kind::sa_driving_licence, sc::doc_classifier::kind::sa_id_card, sc::doc_classifier::kind::passport,
+                                   sc::doc_classifier::kind::sa_temporary_driving_licence})
+                if (find == sc::doc_classifier::short_name(what)) kinds = {what};
 
             int with_card = 0;
             sc::timer all;
@@ -80,23 +80,23 @@ namespace demo {
                 try {
                     sc::image picture{path.string()};
                     sc::timer took;
-                    const auto found = sc::doc::find_documents(picture, how, kinds);
+                    const auto found = sc::doc_classifier::find_documents(picture, how, kinds);
                     const std::string time = std::string(took);
                     if (found.empty()) sc::console::note("nothing found, in " + time);
                     else ++with_card;
 
-                    if (cards && how != sc::doc::method::text) {
+                    if (cards && how != sc::doc_classifier::method::text) {
                         int n = 0;
-                        for (const auto &c: sc::doc::find_cards(picture, how)) {
+                        for (const auto &c: sc::doc_classifier::find_cards(picture, how)) {
                             picture.draw(c.outline(), sc::appearance{sc::stroke{sc::color{"yellow"}, 3}});
-                            sc::doc::straightened(picture, c).save((out / (path.stem().string() + "-card-" + std::to_string(++n) + ".jpg")).string());
+                            sc::doc_classifier::straightened(picture, c).save((out / (path.stem().string() + "-card-" + std::to_string(++n) + ".jpg")).string());
                         }
                     }
                     int n = 0;
                     for (const auto &doc: found) {
-                        const std::string file = path.stem().string() + "-" + sc::doc::short_name(doc.type) + "-" + std::to_string(++n) + ".jpg";
+                        const std::string file = path.stem().string() + "-" + sc::doc_classifier::short_name(doc.type) + "-" + std::to_string(++n) + ".jpg";
                         doc.picture.save((out / file).string());
-                        sc::console::note(sc::doc::to_string(doc.type) + ", " + std::string(doc.confidence) + " sure, outline fit " +
+                        sc::console::note(sc::doc_classifier::to_string(doc.type) + ", " + std::string(doc.confidence) + " sure, outline fit " +
                                           std::to_string(doc.where.fit).substr(0, 4) + ", in " + time + " -> " + file);
                         std::string words;
                         for (const auto &w: doc.words) words += (words.empty() ? "" : " | ") + w;

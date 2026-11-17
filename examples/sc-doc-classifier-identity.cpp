@@ -1,4 +1,4 @@
-// South African identity documents with sc::doc::identity: checking an identity number and what it
+// South African identity documents with sc::doc_classifier::identity: checking an identity number and what it
 // encodes, and - given a photo of an ID card, ID book or passport - reading one with OCR. Each line
 // shows a call, as written, and what it returned. The numbers below are made up. --help lists the
 // options.
@@ -27,15 +27,15 @@ int main(int argc, char **argv) {
 
         sc::console::heading("Checking an identity number");
         sc::console::note("YYMMDD birth date, four digits for sex (5000 and up is male), citizenship, and a Luhn check digit.");
-        SC_SHOW(sc::doc::identity::valid_id_number("8001015009087"));
-        SC_SHOW(sc::doc::identity::id_date_of_birth("8001015009087"));
-        SC_SHOW(sc::doc::identity::id_sex("8001015009087"));
-        SC_SHOW(sc::doc::identity::id_sex("9202204720083"));
+        SC_SHOW(sc::doc_classifier::identity::valid_id_number("8001015009087"));
+        SC_SHOW(sc::doc_classifier::identity::id_date_of_birth("8001015009087"));
+        SC_SHOW(sc::doc_classifier::identity::id_sex("8001015009087"));
+        SC_SHOW(sc::doc_classifier::identity::id_sex("9202204720083"));
 
         sc::console::subheading("Numbers that don't pass");
-        SC_SHOW(sc::doc::identity::valid_id_number("8001015009088")); // wrong check digit
-        SC_SHOW(sc::doc::identity::valid_id_number("8013015009082")); // a correct check digit, but no 13th month
-        SC_SHOW(sc::doc::identity::id_date_of_birth("12345"));        // empty when the number isn't valid
+        SC_SHOW(sc::doc_classifier::identity::valid_id_number("8001015009088")); // wrong check digit
+        SC_SHOW(sc::doc_classifier::identity::valid_id_number("8013015009082")); // a correct check digit, but no 13th month
+        SC_SHOW(sc::doc_classifier::identity::id_date_of_birth("12345"));        // empty when the number isn't valid
 
         sc::console::heading("Reading a document");
         const auto *photo = args.lookup("photo");
@@ -44,8 +44,8 @@ int main(int argc, char **argv) {
             return 0;
         }
         sc::timer sw;
-        const sc::doc::identity document{std::filesystem::path{photo->get<std::string>()}};
-        sc::console::show_text("const sc::doc::identity document{photo};", "read in " + std::string(sw));
+        const sc::doc_classifier::identity document{std::filesystem::path{photo->get<std::string>()}};
+        sc::console::show_text("const sc::doc_classifier::identity document{photo};", "read in " + std::string(sw));
         SC_SHOW(document.document_type_name());
         SC_SHOW(document.has_id_number());
         SC_SHOW(document.id_number());

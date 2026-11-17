@@ -5,7 +5,7 @@
 #include <cstddef>
 #include <string_view>
 
-namespace sc::doc::mrz {
+namespace sc::doc_classifier::mrz {
     // A character's value in a check digit sum: digits 0 to 9, letters 10 to 35, anything else
     // (the < filler) 0.
     inline int value(const char c) {

@@ -9,7 +9,7 @@
 // machine readable lines and their check digits.
 //
 //     const sc::image photo{"scan.jpg"};
-//     for (const auto &found: sc::doc::find_documents(photo, sc::doc::method::text))
+//     for (const auto &found: sc::doc_classifier::find_documents(photo, sc::doc_classifier::method::text))
 //         found.picture.save(short_name(found.type) + ".png");   // straight and upright, size_of(type)
 //
 // Three ways to find a card, to compare (each demo shows one):
@@ -35,7 +35,7 @@
 #include <string>
 #include <vector>
 
-namespace sc::doc {
+namespace sc::doc_classifier {
     // An ID-1 card: 85.6 x 54 mm
     inline constexpr double card_aspect = 85.6 / 54.0;
 

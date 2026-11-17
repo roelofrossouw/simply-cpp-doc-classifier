@@ -19,7 +19,7 @@
 #include <stdexcept>
 #include <string_view>
 
-namespace sc::doc {
+namespace sc::doc_classifier {
     namespace {
         // Cards are looked for in a copy about this many pixels on its long side
         constexpr double working_size = 1000;
@@ -36,11 +36,11 @@ namespace sc::doc {
         // sc::image keeps OpenCV out of its header, so pixels cross over as an uncompressed file.
         // TODO: a way to share the matrix with sc-image instead (it has it in impl::internals).
         cv::Mat to_mat(const image &picture) {
-            if (picture.empty()) throw std::invalid_argument("sc::doc: the image is empty");
+            if (picture.empty()) throw std::invalid_argument("sc::doc_classifier: the image is empty");
             const std::string bytes = picture.encoded("bmp");
             const cv::Mat data(1, static_cast<int>(bytes.size()), CV_8U, const_cast<char *>(bytes.data()));
             cv::Mat result = cv::imdecode(data, cv::IMREAD_COLOR);
-            if (result.empty()) throw std::runtime_error("sc::doc: couldn't read the image's pixels");
+            if (result.empty()) throw std::runtime_error("sc::doc_classifier: couldn't read the image's pixels");
             return result;
         }
 
@@ -580,7 +580,7 @@ namespace sc::doc {
         const layout &layout_of(const kind what) {
             for (const auto &l: layouts())
                 if (l.type == what) return l;
-            throw std::invalid_argument("sc::doc: no layout for " + to_string(what));
+            throw std::invalid_argument("sc::doc_classifier: no layout for " + to_string(what));
         }
 
         struct label_hit {
@@ -931,7 +931,7 @@ namespace sc::doc {
     }
 
     image straightened(const image &picture, const card &where, const size_i size) {
-        if (size.width() <= 0 || size.height() <= 0) throw std::invalid_argument("sc::doc::straightened: the size must be positive");
+        if (size.width() <= 0 || size.height() <= 0) throw std::invalid_argument("sc::doc_classifier::straightened: the size must be positive");
         return to_image(straightened(to_mat(picture), to_quad(where), size));
     }
 

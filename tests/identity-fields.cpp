@@ -12,9 +12,9 @@ int main() {
     SECTION("Reading a smart ID card, photographed sideways");
     {
         // Sideways, so it covers turning it upright too (the upright card.jpg adds nothing but time).
-        const sc::doc::identity card{"resource/samples/card-sideways.jpg"};
+        const sc::doc_classifier::identity card{"resource/samples/card-sideways.jpg"};
         CHECK(card.rotation() == 90 || card.rotation() == 270);
-        CHECK(card.document_type() == sc::doc::identity::document::id_card);
+        CHECK(card.document_type() == sc::doc_classifier::identity::document::id_card);
         CHECK_EQ(card.id_number(), std::string{"8001015009087"});
         CHECK_EQ(card.surname(), std::string{"SAMPLESON"});
         CHECK_EQ(card.names(), std::string{"ALEX JORDAN"});
@@ -26,8 +26,8 @@ int main() {
     SECTION("Reading an ID book, surname starting with VAN");
     {
         // VAN is also the Afrikaans label for surname: VAN DER MERWE was read as DER MERWE.
-        const sc::doc::identity book{"resource/samples/book.jpg"};
-        CHECK(book.document_type() == sc::doc::identity::document::id_book);
+        const sc::doc_classifier::identity book{"resource/samples/book.jpg"};
+        CHECK(book.document_type() == sc::doc_classifier::identity::document::id_book);
         CHECK_EQ(book.id_number(), std::string{"9912310001083"});
         CHECK_EQ(book.surname(), std::string{"VAN DER MERWE"});
         CHECK_EQ(book.names(), std::string{"ANNA-MARIE"});
@@ -44,9 +44,9 @@ int main() {
     if (const std::filesystem::path card_path{"resource/private/documents/ID-10.jpg"}; !slow_ok) {
         std::cout << "   (models on the CPU: skipped; SC_AI_SLOW_TESTS=1 runs it)" << std::endl;
     } else if (std::filesystem::exists(card_path)) {
-        const sc::doc::identity card{card_path};
+        const sc::doc_classifier::identity card{card_path};
         CHECK(!card.has_id_number());
-        CHECK(card.document_type() == sc::doc::identity::document::id_card);
+        CHECK(card.document_type() == sc::doc_classifier::identity::document::id_card);
         CHECK(!card.names().empty());
     } else {
         std::cout << "   (no private documents: skipped)" << std::endl;
