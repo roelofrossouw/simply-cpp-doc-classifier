@@ -29,7 +29,7 @@ set(SOURCE_OBJECTS)
 set(SOURCE_LIBRARIES)
 set(SOURCE_LINK_LIBRARIES)
 
-add_sc_object(sc_doc_classifier
+add_sc_object(doc_classifier
         LINK_LIBRARIES sc::sc-core sc::sc-image sc::sc-ai ${OpenCV_LIBS}
         PUBLIC_LINK_LIBRARIES sc::sc-core sc::sc-image sc::sc-ai ${OpenCV_LIBS})
 # South African identity documents read for their fields (was sc::identity in sc-ai until 2.6.0).

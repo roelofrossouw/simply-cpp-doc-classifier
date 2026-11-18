@@ -1,4 +1,4 @@
-#include <sc/doc-classifier/sc_doc_classifier.h>
+#include <sc/doc-classifier/doc_classifier.h>
 #include "mrz.h"
 
 #include <sc/ai/ocr.h>

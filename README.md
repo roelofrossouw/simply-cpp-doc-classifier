@@ -14,7 +14,7 @@ them out straight and upright, and reads South African identity documents for th
 **Documentation:** the [simply-cpp wiki](https://github.com/roelofrossouw/simply-cpp/wiki) has the [sc-doc-classifier reference](https://github.com/roelofrossouw/simply-cpp/wiki/Reference-sc-doc-classifier).
 
 ```cpp
-#include <sc/doc-classifier/sc_doc_classifier.h>
+#include <sc/doc-classifier/doc_classifier.h>
 
 const sc::image photo{"scan.jpg"};
 for (const auto &found: sc::doc_classifier::find_documents(photo, sc::doc_classifier::method::text)) {
